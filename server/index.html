@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validación Maquina Vulnerable</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .form-container {
+            flex: 1;
+            padding-right: 20px;
+            min-width: 250px; /* Evita que el formulario se estreche demasiado */
+        }
+        .list-container {
+            flex: 1;
+            border-left: 1px solid #ccc;
+            padding-left: 20px;
+            min-width: 250px; /* Evita que la lista se estreche demasiado */
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: calc(100% - 10px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            width: 100%;
+            background-color: #4caf50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .player-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .player-list-item {
+            margin-bottom: 10px;
+        }
+
+        /* Media queries para dispositivos más pequeños */
+        @media screen and (max-width: 600px) {
+            .container {
+                width: 100%;
+            }
+            .form-container, .list-container {
+                flex: 1 100%;
+                border: none;
+                padding: 0;
+                margin-bottom: 20px;
+            }
+            .list-container {
+                border-top: 1px solid #ccc;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Hash Vuln Machine</h1>
+            <footer style="text-align: center; margin-top: 20px; color: #777; font-size: 12px;">
+                Hecho con amor por Samuel Sarante
+            </footer>
+            <form id="hashForm" action="/validacion/hash" method="post">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required><br><br>
+                <label for="hash">Hash:</label>
+                <input type="text" id="hash" name="hash" required><br><br>
+                <input type="submit" value="Validar">
+            </form>
+        </div>
+        <div class="list-container">
+            <h2>Últimos Jugadores</h2>
+            <ul id="playerList" class="player-list">
+                <!-- Aquí se mostrarán dinámicamente los jugadores -->
+            </ul>
+        </div>
+    </div>
+    <script>
+        // Función para cargar los jugadores desde el archivo y mostrarlos en la lista
+        function cargarJugadores() {
+            fetch('/jugadores')
+                .then(response => response.text())
+                .then(data => {
+                    const playerList = document.getElementById('playerList');
+                    const players = data.split('\n').filter(Boolean);
+                    players.forEach(player => {
+                        const playerItem = document.createElement('li');
+                        playerItem.textContent = player;
+                        playerList.appendChild(playerItem);
+                    });
+                })
+                .catch(error => console.error('Error al cargar jugadores:', error));
+        }
+
+        // Función para agregar un jugador a la lista con la fecha y hora actual
+        function agregarJugadorConFecha(nombre, fechaHora) {
+            // Obtener la lista de jugadores
+            var listaJugadores = document.getElementById("playerList");
+        }
+
+        // Cuando la página se carga, cargar los jugadores desde el archivo y mostrarlos en la lista
+        window.onload = cargarJugadores;
+    </script>
+</body>
+</html>
